@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
-import { setTodo, deleteTodo } from "../redux/modules/todo";
+import { setTodo, deleteTodo, changeTodo } from "../redux/modules/todo";
 
 function Main() {
   let { todos } = useSelector((state) => state.todos);
@@ -84,6 +84,13 @@ function Todo(props) {
         }}
       >
         삭제
+      </button>
+      <button
+        onClick={() => {
+          dispatch(changeTodo(todo.id));
+        }}
+      >
+        {todo.isDone ? "취소" : "완료"}
       </button>
     </div>
   );

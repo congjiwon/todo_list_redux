@@ -1,6 +1,7 @@
 import uuid from "react-uuid";
 const SET_TODO = "SET_TODO";
 const DELETE_TODO = "DELETE_TODO";
+const CHANGE_TODO = "CHANGE_TODO";
 
 export const setTodo = (payload) => {
   return {
@@ -12,6 +13,13 @@ export const setTodo = (payload) => {
 export const deleteTodo = (payload) => {
   return {
     type: DELETE_TODO,
+    payload: payload,
+  };
+};
+
+export const changeTodo = (payload) => {
+  return {
+    type: CHANGE_TODO,
     payload: payload,
   };
 };
@@ -38,7 +46,7 @@ const todos = (state = initialState, action) => {
   switch (action.type) {
     case SET_TODO: {
       return {
-        ...state,
+        // ...state,
         todos: [...state.todos, action.payload],
       };
     }
@@ -46,6 +54,19 @@ const todos = (state = initialState, action) => {
     case DELETE_TODO: {
       const newTodo = state.todos.filter((filteredItem) => {
         return filteredItem.id !== action.payload;
+      });
+      return {
+        todos: newTodo,
+      };
+    }
+
+    case CHANGE_TODO: {
+      const newTodo = state.todos.map((item) => {
+        if (item.id === action.payload) {
+          return { ...item, isDone: !item.isDone };
+        } else {
+          return item;
+        }
       });
       return {
         todos: newTodo,
