@@ -1,17 +1,32 @@
-// import uuid from "react";
+import uuid from "react-uuid";
+const SET_TODO = "SET_TODO";
+const DELETE_TODO = "DELETE_TODO";
+
+export const setTodo = (payload) => {
+  return {
+    type: SET_TODO,
+    payload: payload,
+  };
+};
+
+export const deleteTodo = (payload) => {
+  return {
+    type: DELETE_TODO,
+    payload: payload,
+  };
+};
 
 const initialState = {
-  todo: [
+  todos: [
     {
-      //   id: uuid(),
-      id: 1,
+      id: uuid(),
       title: "1",
       contents: "11",
       isDone: false,
     },
+
     {
-      //   id: uuid(),
-      id: 2,
+      id: uuid(),
       title: "2",
       contents: "22",
       isDone: true,
@@ -21,6 +36,22 @@ const initialState = {
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
+    case SET_TODO: {
+      return {
+        ...state,
+        todos: [...state.todos, action.payload],
+      };
+    }
+
+    case DELETE_TODO: {
+      const newTodo = state.todos.filter((filteredItem) => {
+        return filteredItem.id !== action.payload;
+      });
+      return {
+        todos: newTodo,
+      };
+    }
+
     default:
       return state;
   }
