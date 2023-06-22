@@ -2,13 +2,14 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
-import { setTodo, deleteTodo, changeTodo } from "../redux/modules/todo";
+import { setTodo } from "../redux/modules/todo";
+import Todo from "../components/Todo";
 
 function Main() {
   let { todos } = useSelector((state) => state.todos);
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const dispatch = useDispatch(); //dispatch 가져와보기
+  const dispatch = useDispatch();
 
   //TODO추가
   const addTodoHandler = () => {
@@ -29,6 +30,7 @@ function Main() {
       <header>
         <p>My Todo List</p>
       </header>
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -67,31 +69,6 @@ function Main() {
           return null;
         })}
       </main>
-    </div>
-  );
-}
-
-function Todo(props) {
-  const dispatch = useDispatch(); //dispatch 가져와보기
-  const { todo } = props;
-  return (
-    <div key={todo.id}>
-      <p>{todo.title}</p>
-      <p>{todo.contents}</p>
-      <button
-        onClick={() => {
-          dispatch(deleteTodo(todo.id));
-        }}
-      >
-        삭제
-      </button>
-      <button
-        onClick={() => {
-          dispatch(changeTodo(todo.id));
-        }}
-      >
-        {todo.isDone ? "취소" : "완료"}
-      </button>
     </div>
   );
 }

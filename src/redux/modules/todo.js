@@ -46,7 +46,6 @@ const todos = (state = initialState, action) => {
   switch (action.type) {
     case SET_TODO: {
       return {
-        // ...state,
         todos: [...state.todos, action.payload],
       };
     }
